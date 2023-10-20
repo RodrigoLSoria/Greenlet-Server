@@ -11,6 +11,12 @@ module.exports = app => {
     const uploadRoutes = require('./upload.routes')
     app.use('/api/upload', uploadRoutes)
 
+    const exchangesRoutes = require('./exchange.routes')
+    app.use('/api/exchanges', exchangesRoutes)
+
+    const badgesRoutes = require('./badge.routes')
+    app.use('/api/badges', badgesRoutes)
+
     const conversationsRoutes = require('./conversations.routes')
     app.use('/api/conversations', conversationsRoutes)
 

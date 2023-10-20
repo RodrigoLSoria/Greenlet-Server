@@ -27,6 +27,51 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    favorites: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post',
+    }],
+    badges: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Badge',
+    }],
+    ratings: [{
+      rater: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+      value: {
+        type: Number,
+        required: true,
+        min: 1,  // Assuming a rating from 1 to 5
+        max: 5,
+      },
+      comment: {  // Users can leave comments with their ratings
+        type: String,
+        trim: true,
+      },
+      exchangeId: {  // Tying each rating to a specific exchange
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exchange', // Assuming you have an Exchange model
+        required: true,
+      }
+    }],
+    exchanges: [{
+      plantType: {
+        type: String,
+        required: true,
+      },
+      count: {
+        type: Number,
+        default: 1,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    }],
+
   },
   {
     timestamps: true,

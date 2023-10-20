@@ -13,7 +13,7 @@ const socket = (server) => {
         // console.log('Se ha conectado un cliente', socket.id)
 
         socket.on('message', ({ data }) => {
-
+            console.log('on message')
             io.emit('newMessage', (data))
 
         })

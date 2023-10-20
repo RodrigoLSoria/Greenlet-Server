@@ -31,6 +31,12 @@ app.use('/api/messages', messagesRoutes)
 const conversationsRoutes = require('./routes/conversations.routes')
 app.use('/api/conversations', conversationsRoutes)
 
+const exchangesRoutes = require('./routes/exchange.routes')
+app.use('/api/exchanges', exchangesRoutes)
+
+const badgesRoutes = require('./routes/badge.routes')
+app.use('/api/badges', badgesRoutes)
+
 const userRoutes = require("./routes/user.routes")
 app.use("/api/user", userRoutes)
 

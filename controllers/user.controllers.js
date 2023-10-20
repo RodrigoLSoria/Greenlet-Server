@@ -17,7 +17,6 @@ const getOneUser = (req, res, next) => {
         .catch(err => next(err))
 }
 
-//no estoy haciendo el de save porque si con el auth ya se crean usuarios no tiene sentido repetir el save no??
 
 const deleteUser = (req, res, next) => {
     const { user_id } = req.params
@@ -38,9 +37,27 @@ const editProfile = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const getUserFavorites = (req, res, next) => {
+    const { user_id } = req.params;
+
+    User
+        .findById(user_id)
+        .select('favorites')
+        .populate('favorites')
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            res.json(user.favorites);
+        })
+        .catch(err => next(err));
+};
+
+
 module.exports = {
     getAllUsers,
     getOneUser,
     deleteUser,
-    editProfile
+    editProfile,
+    getUserFavorites
 }

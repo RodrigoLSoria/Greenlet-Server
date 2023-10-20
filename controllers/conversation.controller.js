@@ -24,7 +24,16 @@ const getConversation = (req, res, next) => {
                 { sender: receiver_id, receiver: sender_id }
             ]
         })
-        .populate(['sender', 'receiver', 'messages', 'post'])
+        .populate(['messages', 'post'])
+        .populate('sender', '_id username avatar')
+        .populate('receiver', '_id username avatar')
+        .populate({
+            path: 'messages',
+            populate: [
+                { path: 'sender', select: 'username avatar' },
+                { path: 'receiver', select: 'username avatar' }
+            ]
+        })
         .sort({ timestamp: 1 })
         .then(response => res.json(response))
         .catch(err => next(err))
