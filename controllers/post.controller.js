@@ -37,6 +37,7 @@ const getPostsByOwner = (req, res, next) => {
     const { owner_id } = req.params;
     Post
         .find({ owner: owner_id })
+        .populate('owner', 'username')
         .sort({ createdAt: -1 })
         .then(response => res.json(response))
         .catch(err => next(err));

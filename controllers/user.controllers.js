@@ -8,11 +8,13 @@ const getAllUsers = (req, res, next) => {
         .catch(err => next(err))
 }
 
-const getOneUser = (req, res, next) => {
+const getUserDetails = (req, res, next) => {
+
     const { user_id } = req.params
 
     User
         .findById(user_id)
+        .populate('badges')
         .then(response => res.json(response))
         .catch(err => next(err))
 }
@@ -56,7 +58,7 @@ const getUserFavorites = (req, res, next) => {
 
 module.exports = {
     getAllUsers,
-    getOneUser,
+    getUserDetails,
     deleteUser,
     editProfile,
     getUserFavorites

@@ -34,14 +34,15 @@ const updateExchange = (req, res, next) => {
 
 }
 
-const getPendingExchangesForUser = (req, res, next) => {
-    const { user_id } = req.params;
-
+const getExchangesForUserByStatus = (req, res, next) => {
+    const { user_id } = req.params
+    const { status } = req.params
+    console.log("esto me llega a controller", req.params)
     // Assuming 'pending' is the status for exchanges that haven't been accepted/rejected
     PlantExchange
         .find({
             $or: [{ giver: user_id }, { receiver: user_id }],
-            status: 'pending'
+            status: status
         })
         .populate('giver receiver givenPost') // Optionally populate fields for more details
         .then(pendingExchanges => {
@@ -52,9 +53,10 @@ const getPendingExchangesForUser = (req, res, next) => {
         })
 }
 
+
 module.exports = {
     saveExchange,
     updateExchange,
-    getPendingExchangesForUser
+    getExchangesForUserByStatus
 }
 

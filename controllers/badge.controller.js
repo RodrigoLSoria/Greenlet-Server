@@ -1,6 +1,15 @@
 const Badge = require("../models/Badge.model")
 const User = require("../models/User.model")
 
+const getAllBadges = (req, res, next) => {
+    Badge
+        .find({})
+        .then(badges => {
+            res.json(badges);
+        })
+        .catch(err => next(err));
+}
+
 const updateExchangeCount = (req, res, next) => {
     const { user_id, plantType, count } = req.body
     console.log("esto es lo que me llega por reqbody", req.body)
@@ -72,7 +81,8 @@ const addBadgeToUser = (req, res, next) => {
 
 module.exports = {
     updateExchangeCount,
-    addBadgeToUser
+    addBadgeToUser,
+    getAllBadges
 }
 
 

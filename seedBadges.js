@@ -72,7 +72,7 @@ const badges = [
         description: "Exchanged a total of 50 plants.",
         imageUrl: "PLACEHOLDER_URL_FOR_GREEN_THUMBS_UP",
         criteria: {
-            type: "totalPlantsExchanged",
+            type: "exchangesCompleted",
             count: 50
         }
     },
@@ -81,8 +81,8 @@ const badges = [
         description: "Exchanged with 10 different users within your local community.",
         imageUrl: "PLACEHOLDER_URL_FOR_GREEN_THUMBS_UP",
         criteria: {
-            type: "exchangesWithinCommunity",
-            count: 10
+            type: "exchangesCompleted",
+            count: 20
         }
     },
     {
