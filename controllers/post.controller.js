@@ -56,10 +56,6 @@ const savePost = (req, res, next) => {
     const { title, description, plantType, image, location, category } = req.body;
     const { _id: owner } = req.payload
 
-
-    console.log("req.body", req.body)
-
-
     geocodingService
         .reverseGeocode(location.coordinates[1], location.coordinates[0])
         .then(detailedLocation => {

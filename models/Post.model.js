@@ -48,6 +48,90 @@ const postSchema = new mongoose.Schema({
     isClosed: {
         type: Boolean,
         default: false
+    },
+    careInstructions: {
+        location: {
+            type: String,
+            enum: ['interior', 'exterior', 'both'],
+            default: 'interior'
+        },
+        light: {
+            type: String,
+            enum: ['low', 'medium', 'high', 'direct sunlight'],
+            default: 'medium'
+        },
+        wateringFrequency: {
+            type: Number,  // in days
+            default: 7     // default is once a week
+        },
+        temperature: {
+            indoor: {
+                type: String,
+                enum: ['cold', 'temperate', 'warm'],
+                default: 'temperate'
+            },
+            outdoor: {
+                type: String,
+                enum: ['cold', 'temperate', 'warm', 'hardiness zones'],
+                default: 'temperate'
+            }
+        },
+        humidity: {
+            type: String,
+            enum: ['low', 'medium', 'high'],
+            default: 'medium'
+        },
+        soilType: {
+            type: String,
+            enum: ['sandy', 'loamy', 'clayey', 'peaty', 'chalky', 'silty'],
+            default: 'loamy'
+        },
+        potting: {
+            type: Boolean,
+            default: true  // default is that it requires potting
+        },
+        fertilizingFrequency: {
+            type: Number,  // in weeks
+            default: 4     // default is once a month
+        },
+        pruning: {
+            type: Boolean,
+            default: false // default is that it doesn't require pruning
+        },
+        repotting: {
+            type: Boolean,
+            default: false // default is that it doesn't require repotting
+        },
+        pestManagement: {
+            type: String,
+            maxLength: 250
+        },
+        dormancy: {
+            type: Boolean,
+            default: false // default is that it doesn't have a dormancy period
+        },
+        propagation: {
+            type: String,
+            maxLength: 150
+        },
+        wateringMethod: {
+            type: String,
+            enum: ['top-watering', 'bottom-watering', 'misting', 'soak and dry'],
+            default: 'top-watering'
+        },
+        toxicity: {
+            type: String,
+            enum: ['non-toxic', 'toxic'],
+            default: 'non-toxic'
+        },
+        specialNeeds: {
+            type: String,
+            maxLength: 150
+        },
+        otherNotes: {
+            type: String,
+            maxLength: 250
+        }
     }
 },
     {

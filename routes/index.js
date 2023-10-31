@@ -22,4 +22,7 @@ module.exports = app => {
 
     const userRoutes = require("./user.routes")
     app.use("/api/user", userRoutes)
+
+    const mapsRoutes = require("./maps.routes")
+    app.use("/api/maps", mapsRoutes)
 }   

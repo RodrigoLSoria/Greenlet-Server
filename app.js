@@ -40,6 +40,9 @@ app.use('/api/badges', badgesRoutes)
 const userRoutes = require("./routes/user.routes")
 app.use("/api/user", userRoutes)
 
+const mapsRoutes = require("./routes/maps.routes");
+app.use("/api/maps", mapsRoutes);
+
 require('./routes')(app)
 
 require("./error-handling")(app);
