@@ -25,4 +25,7 @@ module.exports = app => {
 
     const mapsRoutes = require("./maps.routes")
     app.use("/api/maps", mapsRoutes)
+
+    const alertsRoutes = require("./alerts.routes")
+    app.use("/api/alerts", alertsRoutes)
 }   

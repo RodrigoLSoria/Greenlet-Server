@@ -26,6 +26,65 @@ const PLANT_TYPES = [
     'Carnivorous Plants'
 ]
 
+const EQUIPMENT_TYPES = {
+    PotsAndContainers: [
+        "pot",
+        "container",
+        "plant stand",
+    ],
+    WateringEquipment: [
+        "watering can",
+        "spray bottle",
+        "garden hose",
+        "nozzle",
+        "watering system",
+    ],
+    GardeningTools: [
+        "pruning shears",
+        "gloves",
+        "trowel",
+        "spade",
+        "rake",
+        "shovel",
+        "plant clips",
+        "garden twine",
+    ],
+    PlantCare: [
+        "grow lights",
+        "humidity tray",
+        "misting bottle",
+        "fertilizer",
+        "compost bin",
+        "mulch",
+        "potting mix",
+        "insecticidal soap",
+        "neem oil",
+        "fungicide",
+        "pest control sprays",
+    ],
+    PropagationAndSupport: [
+        "propagation station",
+        "trellis",
+        "stakes",
+        "plant support",
+        "seed tray",
+    ],
+    MonitoringTools: [
+        "moisture meter",
+        "pH meter",
+        "temperature and humidity monitor",
+        "plant labels",
+    ],
+    DecorativeAndMiscellaneous: [
+        "pebbles",
+        "decorative stones",
+    ],
+}
+
+const EQUIPMENT_CONDITION = ['new', 'like new', 'used', 'well-worn']
+
 module.exports = {
-    PLANT_TYPES: PLANT_TYPES
+    PLANT_TYPES: PLANT_TYPES,
+    EQUIPMENT_TYPES: EQUIPMENT_TYPES,
+    EQUIPMENT_CONDITION: EQUIPMENT_CONDITION
 }

@@ -23,6 +23,7 @@ const getConversation = (req, res, next) => {
                 { sender: receiver, receiver: sender, post },
             ],
         })
+        .populate('post')
         .then((existingConversation) => {
             console.log("hay existing conversation?", existingConversation);
 

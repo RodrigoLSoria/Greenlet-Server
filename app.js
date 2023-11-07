@@ -41,7 +41,10 @@ const userRoutes = require("./routes/user.routes")
 app.use("/api/user", userRoutes)
 
 const mapsRoutes = require("./routes/maps.routes");
-app.use("/api/maps", mapsRoutes);
+app.use("/api/maps", mapsRoutes)
+
+const alertsRoutes = require("./routes/alerts.routes");
+app.use("/api/alerts", alertsRoutes);
 
 require('./routes')(app)
 

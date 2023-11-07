@@ -33,10 +33,21 @@ const editProfile = (req, res, next) => {
     const { user_id } = req.params
     const userData = req.body
 
-    User
-        .findByIdAndUpdate(user_id, userData)
-        .then(response => res.json(response))
-        .catch(err => next(err))
+    if (userData.ratings) {
+        User
+            .findById(user_id)
+            .then(user => {
+                user.ratings.push(userData.ratings);
+                return user.save();
+            })
+            .then(updatedUser => res.json(updatedUser))
+            .catch(err => next(err));
+    } else {
+        User
+            .findByIdAndUpdate(user_id, userData, { new: true })
+            .then(response => res.json(response))
+            .catch(err => next(err));
+    }
 }
 
 const getUserFavorites = (req, res, next) => {

@@ -132,6 +132,23 @@ const postSchema = new mongoose.Schema({
             type: String,
             maxLength: 250
         }
+    },
+    equipment: {
+        equipmentType: {
+            type: String,
+            enum: Object.keys(Constants.EQUIPMENT_TYPES).flatMap(
+                key => Constants.EQUIPMENT_TYPES[key]
+            ),
+            trim: true,
+        },
+        condition: {
+            type: String,
+            enum: ['new', 'like new', 'used', 'well-worn'],
+        },
+        otherNotes: {
+            type: String,
+            maxLength: 250,
+        }
     }
 },
     {

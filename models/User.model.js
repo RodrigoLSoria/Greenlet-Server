@@ -35,6 +35,14 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Badge',
     }],
+    wishlist: [{
+      type: String,
+      max: 10,
+    }],
+    alerts: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Alert',
+    }],
     ratings: [{
       rater: {
         type: mongoose.Schema.Types.ObjectId,

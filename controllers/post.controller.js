@@ -53,17 +53,33 @@ const getOnePost = (req, res, next) => {
 
 const savePost = (req, res, next) => {
 
-    const { title, description, plantType, image, location, category } = req.body;
+    const { title, description, plantType, image, location, category,
+        equipmentType, condition, otherNotes } = req.body;
+
     const { _id: owner } = req.payload
+
 
     geocodingService
         .reverseGeocode(location.coordinates[1], location.coordinates[0])
         .then(detailedLocation => {
             const fullLocation = { ...location, ...detailedLocation };
-            return Post
-                .create({ title, description, plantType, image, location: fullLocation, owner, category });
+            return Post.create({
+                title,
+                description,
+                plantType,
+                image,
+                location: fullLocation,
+                owner,
+                category,
+                equipment: {
+                    equipmentType,
+                    condition,
+                    otherNotes
+                }
+            })
         })
         .then(post => {
+            console.log("este es el post creado", post)
             res.json(post);
         })
         .catch(err => {
@@ -98,7 +114,10 @@ const getFilteredPosts = (req, res, next) => {
     category && (query.category = category)
     plantType && (query.plantType = plantType)
 
-    if (dateFilter) {
+
+    if (category === 'found') {
+        query.createdAt = { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
+    } else if (dateFilter) {
         const now = new Date();
         let startDate;
 
@@ -120,6 +139,21 @@ const getFilteredPosts = (req, res, next) => {
         query.createdAt = { $gte: startDate };
     }
 
+
+    // if (category.includes('found') && (!dateFilter || dateFilter === '24h')) {
+    //     query.createdAt = { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) };
+    // } else if (dateFilter) {
+    //     const now = new Date();
+    //     switch (dateFilter) {
+    //         case '7d':
+    //             query.createdAt = { $gte: new Date(now - 7 * 24 * 60 * 60 * 1000) };
+    //             break;
+    //         case '30d':
+    //             query.createdAt = { $gte: new Date(now - 30 * 24 * 60 * 60 * 1000) };
+    //             break;
+    //         // No '24h' or 'all' case needed, '24h' is handled above, 'all' means no createdAt query
+    //     }
+    // }  
     query.location = {
         $near: {
             $geometry: {
