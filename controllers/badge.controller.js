@@ -20,7 +20,7 @@ const updateExchangeCount = (req, res, next) => {
             const exchange = user.exchanges.find(e => e.plantType === plantType)
 
             if (exchange) {
-                exchange.count += count  // Increment by the count
+                exchange.count += count
             } else {
                 user.exchanges.push({ plantType, count })
             }

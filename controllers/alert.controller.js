@@ -80,7 +80,6 @@ const checkForAlertMatches = async (req, res, next) => {
         });
 
         // Do something with the matches, e.g., send an email
-        // ...
 
         res.json(matches);
     } catch (err) {
