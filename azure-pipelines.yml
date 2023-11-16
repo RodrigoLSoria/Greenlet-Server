@@ -9,16 +9,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  PORT: 5005
-  ORIGIN: http://localhost:5173
-  MONGODB_URI: 'mongodb://127.0.0.1:27017/greenlet-app'
-  TOKEN_SECRET: wGrEcb67_HUEGBfsef47aQXdXr20Vgfqamnuyt
-  GOOGLE_MAPS_API_KEY: 'AIzaSyAykqyjJSiEqi3skepf4vJpjQP49fTbj1Q'
-  CLOUDINARY_NAME: depxadgb3
-  CLOUDINARY_KEY: 516952131158793
-  CLOUDINARY_SECRET: WK2OgxMO5jROb8qFEJXB1YhAPgU
-
 steps:
 - task: NodeTool@0
   inputs:
@@ -27,5 +17,4 @@ steps:
 
 - script: |
     npm install
-    npm start
   displayName: 'npm install and build'
