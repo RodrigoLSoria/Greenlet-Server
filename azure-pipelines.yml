@@ -10,11 +10,39 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'greenlet'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'sqa_48ac99b4eb2ffe6b926981691da5753c3f90e795'
+    cliSources: '.'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
-  displayName: 'Install Node.js'
 
 - script: |
     npm install
   displayName: 'npm install and build'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+
+
