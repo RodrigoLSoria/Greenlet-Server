@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const messageSchema = new mongoose.Schema({
     sender: {
@@ -23,8 +23,8 @@ const messageSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-});
+})
 
-const Message = mongoose.model('Message', messageSchema);
+const Message = mongoose.model('Message', messageSchema)
 
-module.exports = Message;
+module.exports = Message

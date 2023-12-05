@@ -1,31 +1,33 @@
-module.exports = app => {
-    const postsRoutes = require('./posts.routes')
-    app.use('/api/posts', postsRoutes)
+const router = require("express").Router()
 
-    const authRoutes = require('./auth.routes')
-    app.use('/api/auth', authRoutes)
+const postsRoutes = require('./posts.routes')
+router.use('/feed', postsRoutes)
 
-    const messagesRoutes = require('./messages.routes')
-    app.use('/api/messages', messagesRoutes)
+const authRoutes = require('./auth.routes')
+router.use('/auth', authRoutes)
 
-    const uploadRoutes = require('./upload.routes')
-    app.use('/api/upload', uploadRoutes)
+const messagesRoutes = require('./messages.routes')
+router.use('/messages', messagesRoutes)
 
-    const exchangesRoutes = require('./exchange.routes')
-    app.use('/api/exchanges', exchangesRoutes)
+const uploadRoutes = require('./upload.routes')
+router.use('/upload', uploadRoutes)
 
-    const badgesRoutes = require('./badge.routes')
-    app.use('/api/badges', badgesRoutes)
+const exchangesRoutes = require('./exchange.routes')
+router.use('/exchanges', exchangesRoutes)
 
-    const conversationsRoutes = require('./conversations.routes')
-    app.use('/api/conversations', conversationsRoutes)
+const badgesRoutes = require('./badge.routes')
+router.use('/badges', badgesRoutes)
 
-    const userRoutes = require("./user.routes")
-    app.use("/api/user", userRoutes)
+const conversationsRoutes = require('./conversations.routes')
+router.use('/conversations', conversationsRoutes)
 
-    const mapsRoutes = require("./maps.routes")
-    app.use("/api/maps", mapsRoutes)
+const userRoutes = require("./user.routes")
+router.use("/user", userRoutes)
 
-    const alertsRoutes = require("./alerts.routes")
-    app.use("/api/alerts", alertsRoutes)
-}   
+const mapsRoutes = require("./maps.routes")
+router.use("/maps", mapsRoutes)
+
+const alertsRoutes = require("./alerts.routes")
+router.use("/alerts", alertsRoutes)
+
+module.exports = router

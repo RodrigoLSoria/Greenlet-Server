@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const conversationSchema = new mongoose.Schema({
     sender: {
@@ -26,8 +26,8 @@ const conversationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Message'
     }
-});
+})
 
-const Conversation = mongoose.model('Conversation', conversationSchema);
+const Conversation = mongoose.model('Conversation', conversationSchema)
 
-module.exports = Conversation;
+module.exports = Conversation

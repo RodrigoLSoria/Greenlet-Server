@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const alertSchema = new mongoose.Schema({
   userId: {
@@ -21,11 +21,10 @@ const alertSchema = new mongoose.Schema({
     type: String,
     default: 'all',
   },
-  // You can add any other fields as per your requirements
 }, {
   timestamps: true,
-});
+})
 
-const Alert = mongoose.model('Alert', alertSchema);
+const Alert = mongoose.model('Alert', alertSchema)
 
 module.exports = Alert

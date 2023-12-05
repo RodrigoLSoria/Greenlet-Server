@@ -1,0 +1,22 @@
+FROM node:18.16.1
+
+LABEL author="Rodrigo L. Soria"
+
+COPY . ./app
+
+WORKDIR /app
+
+RUN npm install
+
+ENV PORT=5005
+ENV ORIGIN=http://localhost:5173
+ENV MONGODB_URI=mongodb://127.0.0.1:27017/greenlet-app
+ENV TOKEN_SECRET=wGrEcb67_HUEGBfsef47aQXdXr20Vgfqamnuyt
+ENV GOOGLE_MAPS_API_KEY='AIzaSyAykqyjJSiEqi3skepf4vJpjQP49fTbj1Q'
+ENV CLOUDINARY_NAME=depxadgb3
+ENV CLOUDINARY_KEY=516952131158793
+ENV CLOUDINARY_SECRET=WK2OgxMO5jROb8qFEJXB1YhAPgU
+
+EXPOSE 5005
+
+ENTRYPOINT ["node", "server.js"]

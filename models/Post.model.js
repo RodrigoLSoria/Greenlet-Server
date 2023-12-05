@@ -88,19 +88,19 @@ const postSchema = new mongoose.Schema({
         },
         potting: {
             type: Boolean,
-            default: true  // default is that it requires potting
+            default: true
         },
         fertilizingFrequency: {
-            type: Number,  // in weeks
-            default: 4     // default is once a month
+            type: Number,
+            default: 4
         },
         pruning: {
             type: Boolean,
-            default: false // default is that it doesn't require pruning
+            default: false
         },
         repotting: {
             type: Boolean,
-            default: false // default is that it doesn't require repotting
+            default: false
         },
         pestManagement: {
             type: String,
@@ -108,7 +108,7 @@ const postSchema = new mongoose.Schema({
         },
         dormancy: {
             type: Boolean,
-            default: false // default is that it doesn't have a dormancy period
+            default: false
         },
         propagation: {
             type: String,
@@ -153,10 +153,10 @@ const postSchema = new mongoose.Schema({
 },
     {
         timestamps: true
-    });
+    })
 
 postSchema.index({ "location": "2dsphere" })
 
 const Post = mongoose.model('Post', postSchema, 'posts')
 
-module.exports = Post;
+module.exports = Post

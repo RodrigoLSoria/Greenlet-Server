@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const badgeSchema = new mongoose.Schema({
     name: {
@@ -17,8 +17,8 @@ const badgeSchema = new mongoose.Schema({
         type: Object,
         required: true,
     }
-});
+})
 
-const Badge = mongoose.model('Badge', badgeSchema);
+const Badge = mongoose.model('Badge', badgeSchema)
 
-module.exports = Badge;
+module.exports = Badge
