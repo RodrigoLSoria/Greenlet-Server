@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const plantExchangeSchema = new mongoose.Schema({
     giver: {
@@ -29,8 +29,8 @@ const plantExchangeSchema = new mongoose.Schema({
         enum: ['pending', 'completed', 'cancelled'],
         default: 'pending',
     },
-});
+})
 
-const PlantExchange = mongoose.model('PlantExchange', plantExchangeSchema, 'plantExchanges');
+const PlantExchange = mongoose.model('PlantExchange', plantExchangeSchema, 'plantExchanges')
 
-module.exports = PlantExchange;
+module.exports = PlantExchange

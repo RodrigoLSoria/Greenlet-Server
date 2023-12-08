@@ -8,8 +8,8 @@ const {
 } = require('./../controllers/auth.controllers')
 
 
-router.post('/signup', signup);
-router.post('/login', login);
-router.get('/verify', verifyToken, verify);
+router.post('/signup', signup)
+router.post('/login', login)
+router.get('/verify', verifyToken, verify)
 
-module.exports = router;
+module.exports = router

@@ -12,4 +12,4 @@ router.post("/saveExchange", verifyToken, saveExchange)
 router.put("/updateExchange/:exchange_id", verifyToken, updateExchange)
 router.get("/getExchangesForUserByStatus/:user_id/:status", verifyToken, getExchangesForUserByStatus)
 
-module.exports = router;
+module.exports = router

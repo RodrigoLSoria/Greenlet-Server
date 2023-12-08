@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema(
   {
@@ -52,16 +52,16 @@ const userSchema = new mongoose.Schema(
       value: {
         type: Number,
         required: true,
-        min: 1,  // Assuming a rating from 1 to 5
+        min: 1,
         max: 5,
       },
-      comment: {  // Users can leave comments with their ratings
+      comment: {
         type: String,
         trim: true,
       },
-      exchangeId: {  // Tying each rating to a specific exchange
+      exchangeId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Exchange', // Assuming you have an Exchange model
+        ref: 'Exchange',
         required: true,
       }
     }],
@@ -84,8 +84,8 @@ const userSchema = new mongoose.Schema(
   {
     timestamps: true,
   }
-);
+)
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports = User;
+module.exports = User
