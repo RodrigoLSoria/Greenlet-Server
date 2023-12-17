@@ -5,8 +5,8 @@ const axios = require('axios');
 
 router.post('/reverse-geocode', (req, res) => {
     const { latitude, longitude } = req.body
-
     const apiKey = process.env.GOOGLE_MAPS_API_KEY
+
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`)
         .then(response => {
             const address = response.data.results[0]
@@ -29,6 +29,7 @@ router.post('/reverse-geocode', (req, res) => {
                 country,
                 postalCode
             });
+
         })
         .catch(err => {
             console.error("There was an error with reverse geocoding: ", err)

@@ -1,4 +1,4 @@
-const PlantExchange = require("../models/PlantExchange.model");
+const PlantExchange = require("../models/PlantExchange.model")
 const { verifyToken } = require('../middleware/verifyToken')
 
 
@@ -12,10 +12,10 @@ const saveExchange = (req, res, next) => {
     PlantExchange
         .create({ giver, receiver, givenPost })
         .then(exchange => {
-            res.json(exchange);
+            res.json(exchange)
         })
         .catch(err => {
-            next(err);
+            next(err)
         })
 }
 
@@ -26,10 +26,10 @@ const updateExchange = (req, res, next) => {
     PlantExchange
         .findByIdAndUpdate(exchange_id, { status: status }, { new: true })  // { new: true } returns the updated document
         .then(updatedExchange => {
-            res.json(updatedExchange);
+            res.json(updatedExchange)
         })
         .catch(err => {
-            next(err);
+            next(err)
         })
 
 }
@@ -46,10 +46,10 @@ const getExchangesForUserByStatus = (req, res, next) => {
         })
         .populate('giver receiver givenPost') // Optionally populate fields for more details
         .then(pendingExchanges => {
-            res.json(pendingExchanges);
+            res.json(pendingExchanges)
         })
         .catch(err => {
-            next(err);
+            next(err)
         })
 }
 

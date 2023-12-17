@@ -1,13 +1,12 @@
-var app = require("./app");
-// ℹ️ Sets the PORT for our app to have access to it. If no env has been set, we hard code it to 5005
+const app = require("./app");
 const http = require('http')
 const server = http.createServer(app)
+const PORT = process.env.PORT || 5005;
+
+
 require('./config/socket')(server)
 
 
-
-const PORT = process.env.PORT || 5005;
-const HOST = process.env.HOST || "0.0.0.0";
-server.listen(`${HOST}:${PORT}`, function () {
-    console.log(`Server listening on http://${HOST}:${PORT}`);
+server.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT}`);
 });

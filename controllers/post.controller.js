@@ -47,6 +47,7 @@ const getOnePost = (req, res, next) => {
     const { post_id } = req.params;
     Post
         .findById(post_id)
+        .populate('owner')
         .then(response => res.json(response))
         .catch(err => next(err));
 }
@@ -166,8 +167,9 @@ const getFilteredPosts = (req, res, next) => {
 
     Post
         .find(query)
-        .populate('owner', 'username')
+        .populate('owner')
         .then(response => {
+            console.log("esto es lo que me devuelve el filtered psots", response)
             res.json(response)
         })
         .catch(err => console.log(err))
