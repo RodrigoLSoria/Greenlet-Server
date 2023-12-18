@@ -1,9 +1,9 @@
-require("dotenv").config();
-require("./db");
+require("dotenv").config()
+require("./db")
 
-const express = require("express");
+const express = require("express")
 
-const app = express();
+const app = express()
 
 require("./config")(app)
 

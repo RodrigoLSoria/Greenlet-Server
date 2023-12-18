@@ -4,7 +4,6 @@ const { verifyToken } = require('../middleware/verifyToken')
 
 
 const saveExchange = (req, res, next) => {
-    // aqui me tendré que traer los datos de alguna manera
     const { giver, receiver, givenPost } = req.body
 
     console.log("esto es lo que me llega al controller por req.body", req.body)
@@ -24,7 +23,7 @@ const updateExchange = (req, res, next) => {
     const { status } = req.body
 
     PlantExchange
-        .findByIdAndUpdate(exchange_id, { status: status }, { new: true })  // { new: true } returns the updated document
+        .findByIdAndUpdate(exchange_id, { status: status }, { new: true })
         .then(updatedExchange => {
             res.json(updatedExchange)
         })
@@ -38,13 +37,12 @@ const getExchangesForUserByStatus = (req, res, next) => {
     const { user_id } = req.params
     const { status } = req.params
     console.log("esto me llega a controller", req.params)
-    // Assuming 'pending' is the status for exchanges that haven't been accepted/rejected
     PlantExchange
         .find({
             $or: [{ giver: user_id }, { receiver: user_id }],
             status: status
         })
-        .populate('giver receiver givenPost') // Optionally populate fields for more details
+        .populate('giver receiver givenPost')
         .then(pendingExchanges => {
             res.json(pendingExchanges)
         })

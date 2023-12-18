@@ -5,65 +5,65 @@ const jwt = require('jsonwebtoken')
 
 
 const signup = (req, res, next) => {
-    const { username, email, password, bio, avatar } = req.body;
+    const { username, email, password, bio, avatar } = req.body
 
     if (password.length < 2) {
-        res.status(400).json({ message: 'Password must have at least 3 characters' });
-        return;
+        res.status(400).json({ message: 'Password must have at least 3 characters' })
+        return
     }
 
     User.findOne({ email })
         .then(foundUser => {
             if (foundUser) {
-                res.status(400).json({ message: "User already exists." });
-                return;
+                res.status(400).json({ message: "User already exists." })
+                return
             }
 
-            const salt = bcrypt.genSaltSync(saltRounds);
-            const hashedPassword = bcrypt.hashSync(password, salt);
+            const salt = bcrypt.genSaltSync(saltRounds)
+            const hashedPassword = bcrypt.hashSync(password, salt)
 
-            return User.create({ username, email, password: hashedPassword, bio, avatar });
+            return User.create({ username, email, password: hashedPassword, bio, avatar })
         })
         .then(() => res.sendStatus(201))
-        .catch(err => next(err));
-};
+        .catch(err => next(err))
+}
 
 const login = (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body
 
     if (email === '' || password === '') {
-        res.status(400).json({ message: "Provide email and password" });
-        return;
+        res.status(400).json({ message: "Provide email and password" })
+        return
     }
 
     User.findOne({ email })
         .then(foundUser => {
             if (!foundUser) {
-                res.status(401).json({ message: "User not found." });
-                return;
+                res.status(401).json({ message: "User not found." })
+                return
             }
 
             if (bcrypt.compareSync(password, foundUser.password)) {
-                const { _id, email, username } = foundUser; //añadir el role mas adelante
-                const payload = { _id, email, username };
+                const { _id, email, username } = foundUser
+                const payload = { _id, email, username }
                 const authToken = jwt.sign(
                     payload,
                     process.env.TOKEN_SECRET,
                     { algorithm: 'HS256', expiresIn: "6h" }
-                );
+                )
 
-                res.status(200).json({ authToken });
+                res.status(200).json({ authToken })
             } else {
-                res.status(401).json({ message: "Incorrect password" });
+                res.status(401).json({ message: "Incorrect password" })
             }
         })
-        .catch(err => next(err));
-};
+        .catch(err => next(err))
+}
 
 const verify = (req, res, next) => {
-    const loggedUser = req.payload;
-    res.json({ loggedUser });
-};
+    const loggedUser = req.payload
+    res.json({ loggedUser })
+}
 
 module.exports = {
     signup,

@@ -362,24 +362,22 @@ mongoose
         useUnifiedTopology: true
     })
     .then((x) => {
-        const dbName = x.connections[0].name;
-        console.log(`Connected to Mongo through seeds! Database name: "${dbName}"`);
+        const dbName = x.connections[0].name
+        console.log(`Connected to Mongo through seeds! Database name: "${dbName}"`)
 
-        // Clear existing badges
-        return Badge.deleteMany();
+        return Badge.deleteMany()
     })
     .then(() => {
-        console.log("Existing badges cleared!");
+        console.log("Existing badges cleared!")
 
-        // Insert new badges
-        return Badge.insertMany(badges);
+        return Badge.insertMany(badges)
     })
     .then(() => {
-        console.log("Badges inserted successfully!");
-        mongoose.connection.close();
+        console.log("Badges inserted successfully!")
+        mongoose.connection.close()
     })
     .catch((err) => {
-        console.error("Error:", err);
+        console.error("Error:", err)
     })
 
-console.log('MONGO_URI:', MONGO_URI);
+console.log('MONGO_URI:', MONGO_URI)

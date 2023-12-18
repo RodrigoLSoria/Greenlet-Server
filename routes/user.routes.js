@@ -16,4 +16,4 @@ router.get("/Favorites/:user_id", verifyToken, getUserFavorites)
 router.delete("/deleteUser/:user_id", verifyToken, deleteUser)
 router.put("/editProfile/:user_id", verifyToken, editProfile)
 
-module.exports = router;
+module.exports = router

@@ -37,21 +37,21 @@ const editProfile = (req, res, next) => {
         User
             .findById(user_id)
             .then(user => {
-                user.ratings.push(userData.ratings);
-                return user.save();
+                user.ratings.push(userData.ratings)
+                return user.save()
             })
             .then(updatedUser => res.json(updatedUser))
-            .catch(err => next(err));
+            .catch(err => next(err))
     } else {
         User
             .findByIdAndUpdate(user_id, userData, { new: true })
             .then(response => res.json(response))
-            .catch(err => next(err));
+            .catch(err => next(err))
     }
 }
 
 const getUserFavorites = (req, res, next) => {
-    const { user_id } = req.params;
+    const { user_id } = req.params
 
     User
         .findById(user_id)
@@ -59,12 +59,12 @@ const getUserFavorites = (req, res, next) => {
         .populate('favorites')
         .then(user => {
             if (!user) {
-                return res.status(404).json({ message: "User not found" });
+                return res.status(404).json({ message: "User not found" })
             }
-            res.json(user.favorites);
+            res.json(user.favorites)
         })
-        .catch(err => next(err));
-};
+        .catch(err => next(err))
+}
 
 
 module.exports = {

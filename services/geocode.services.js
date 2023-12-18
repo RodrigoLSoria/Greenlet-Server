@@ -31,7 +31,7 @@ const reverseGeocode = (latitude, longitude) => {
             console.error("There was an error with reverse geocoding: ", error)
             throw error
         })
-};
+}
 
 
 module.exports = {

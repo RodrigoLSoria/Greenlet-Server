@@ -5,9 +5,9 @@ const getAllBadges = (req, res, next) => {
     Badge
         .find({})
         .then(badges => {
-            res.json(badges);
+            res.json(badges)
         })
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const updateExchangeCount = (req, res, next) => {
@@ -65,18 +65,18 @@ const evaluateBadges = (user, res, next) => {
 }
 
 const addBadgeToUser = (req, res, next) => {
-    const { user_id, badge_id } = req.body;
+    const { user_id, badge_id } = req.body
 
     User.findById(user_id)
         .then(user => {
             if (!user.badges.includes(badge_id)) {
-                user.badges.push(badge_id);
-                return user.save();
+                user.badges.push(badge_id)
+                return user.save()
             }
             return user
         })
         .then(updatedUser => res.json(updatedUser))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 module.exports = {
@@ -84,8 +84,3 @@ module.exports = {
     addBadgeToUser,
     getAllBadges
 }
-
-
-// Optimization: When you evaluate badges, you fetch all badges with Badge.find({}).
-// If you have a lot of badges, this could become inefficient.Instead,
-// consider fetching only the relevant badges that a user might qualify for based on their actions.

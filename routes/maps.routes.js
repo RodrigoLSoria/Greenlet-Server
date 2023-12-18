@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const axios = require('axios');
+const express = require('express')
+const router = express.Router()
+const axios = require('axios')
 
 
 router.post('/reverse-geocode', (req, res) => {
@@ -20,7 +20,7 @@ router.post('/reverse-geocode', (req, res) => {
                 } else if (component.types.includes("country")) {
                     country = component.long_name
                 } else if (component.types.includes("postal_code")) {
-                    postalCode = component.long_name;
+                    postalCode = component.long_name
                 }
             }
 
@@ -28,7 +28,7 @@ router.post('/reverse-geocode', (req, res) => {
                 city,
                 country,
                 postalCode
-            });
+            })
 
         })
         .catch(err => {
@@ -38,4 +38,4 @@ router.post('/reverse-geocode', (req, res) => {
 })
 
 
-module.exports = router;
+module.exports = router

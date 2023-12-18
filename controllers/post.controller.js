@@ -12,7 +12,7 @@ const getAllPosts = (req, res, next) => {
         .sort({ createdAt: -1 })
         .select({ title: 1, description: 1, image: 1, owner: 1 })
         .then(response => res.json(response))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const getPostsByLocation = (req, res, next) => {
@@ -22,40 +22,40 @@ const getPostsByLocation = (req, res, next) => {
         .find({ 'location.city': city, isClosed: false })
         .then((posts) => {
             if (!posts || posts.length === 0) {
-                return res.status(404).json({ message: 'No posts found in the specified city.' });
+                return res.status(404).json({ message: 'No posts found in the specified city.' })
             }
-            res.status(200).json(posts);
+            res.status(200).json(posts)
         })
         .catch((error) => {
-            console.error(error);
-            res.status(500).json({ message: 'Internal server error.' });
-        });
+            console.error(error)
+            res.status(500).json({ message: 'Internal server error.' })
+        })
 
 }
 
 const getPostsByOwner = (req, res, next) => {
-    const { owner_id } = req.params;
+    const { owner_id } = req.params
     Post
         .find({ owner: owner_id })
         .populate('owner', 'username')
         .sort({ createdAt: -1 })
         .then(response => res.json(response))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const getOnePost = (req, res, next) => {
-    const { post_id } = req.params;
+    const { post_id } = req.params
     Post
         .findById(post_id)
         .populate('owner')
         .then(response => res.json(response))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const savePost = (req, res, next) => {
 
     const { title, description, plantType, image, location, category,
-        equipmentType, condition, otherNotes } = req.body;
+        equipmentType, condition, otherNotes } = req.body
 
     const { _id: owner } = req.payload
 
@@ -63,7 +63,7 @@ const savePost = (req, res, next) => {
     geocodingService
         .reverseGeocode(location.coordinates[1], location.coordinates[0])
         .then(detailedLocation => {
-            const fullLocation = { ...location, ...detailedLocation };
+            const fullLocation = { ...location, ...detailedLocation }
             return Post.create({
                 title,
                 description,
@@ -81,28 +81,28 @@ const savePost = (req, res, next) => {
         })
         .then(post => {
             console.log("este es el post creado", post)
-            res.json(post);
+            res.json(post)
         })
         .catch(err => {
-            next(err);
-        });
+            next(err)
+        })
 }
 
 const editPost = (req, res, next) => {
-    const { post_id } = req.params;
-    const formData = req.body;
+    const { post_id } = req.params
+    const formData = req.body
     Post
         .findByIdAndUpdate(post_id, formData)
         .then(() => res.sendStatus(200))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const deletePost = (req, res, next) => {
-    const { post_id } = req.params;
+    const { post_id } = req.params
     Post
         .findByIdAndDelete(post_id)
         .then(() => res.sendStatus(200))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const getFilteredPosts = (req, res, next) => {
@@ -119,39 +119,39 @@ const getFilteredPosts = (req, res, next) => {
     if (category === 'found') {
         query.createdAt = { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
     } else if (dateFilter) {
-        const now = new Date();
-        let startDate;
+        const now = new Date()
+        let startDate
 
         switch (dateFilter) {
             case '24h':
-                startDate = new Date(now - 24 * 60 * 60 * 1000);
-                break;
+                startDate = new Date(now - 24 * 60 * 60 * 1000)
+                break
             case '7d':
-                startDate = new Date(now - 7 * 24 * 60 * 60 * 1000);
-                break;
+                startDate = new Date(now - 7 * 24 * 60 * 60 * 1000)
+                break
             case '30d':
-                startDate = new Date(now - 30 * 24 * 60 * 60 * 1000);
-                break;
+                startDate = new Date(now - 30 * 24 * 60 * 60 * 1000)
+                break
             case 'all':
             default:
-                startDate = new Date(0); // fetch all
+                startDate = new Date(0) // fetch all
         }
 
-        query.createdAt = { $gte: startDate };
+        query.createdAt = { $gte: startDate }
     }
 
 
     // if (category.includes('found') && (!dateFilter || dateFilter === '24h')) {
-    //     query.createdAt = { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) };
+    //     query.createdAt = { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
     // } else if (dateFilter) {
-    //     const now = new Date();
+    //     const now = new Date()
     //     switch (dateFilter) {
     //         case '7d':
-    //             query.createdAt = { $gte: new Date(now - 7 * 24 * 60 * 60 * 1000) };
-    //             break;
+    //             query.createdAt = { $gte: new Date(now - 7 * 24 * 60 * 60 * 1000) }
+    //             break
     //         case '30d':
-    //             query.createdAt = { $gte: new Date(now - 30 * 24 * 60 * 60 * 1000) };
-    //             break;
+    //             query.createdAt = { $gte: new Date(now - 30 * 24 * 60 * 60 * 1000) }
+    //             break
     //         // No '24h' or 'all' case needed, '24h' is handled above, 'all' means no createdAt query
     //     }
     // }  
@@ -177,27 +177,27 @@ const getFilteredPosts = (req, res, next) => {
 }
 
 const favoritePost = (req, res, next) => {
-    const { post_id } = req.params;
-    const user_id = req.payload._id;
+    const { post_id } = req.params
+    const user_id = req.payload._id
 
     User
         .findByIdAndUpdate(user_id, { $addToSet: { favorites: post_id } })
         .then(response => res.json(response))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const unfavoritePost = (req, res, next) => {
-    const { post_id } = req.params;
-    const user_id = req.payload._id;
+    const { post_id } = req.params
+    const user_id = req.payload._id
 
     User
         .findByIdAndUpdate(user_id, { $pull: { favorites: post_id } })
         .then(response => res.json(response))
-        .catch(err => next(err));
+        .catch(err => next(err))
 }
 
 const closePost = (req, res, next) => {
-    const { post_id } = req.params;
+    const { post_id } = req.params
 
     Post
         .findByIdAndUpdate(post_id, { isClosed: true })
@@ -217,5 +217,5 @@ module.exports = {
     favoritePost,
     unfavoritePost,
     closePost
-};
+}
 
