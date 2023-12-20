@@ -107,7 +107,7 @@ const deletePost = (req, res, next) => {
 
 const getFilteredPosts = (req, res, next) => {
     const { searchQuery, category, plantType, dateFilter, userLatitude, userLongitude } = req.query
-    const defaultMaxDistance = 20
+    const defaultMaxDistance = 1000000
 
     let query = { isClosed: false }
 
