@@ -80,7 +80,6 @@ const savePost = (req, res, next) => {
             })
         })
         .then(post => {
-            console.log("este es el post creado", post)
             res.json(post)
         })
         .catch(err => {
@@ -140,21 +139,6 @@ const getFilteredPosts = (req, res, next) => {
         query.createdAt = { $gte: startDate }
     }
 
-
-    // if (category.includes('found') && (!dateFilter || dateFilter === '24h')) {
-    //     query.createdAt = { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
-    // } else if (dateFilter) {
-    //     const now = new Date()
-    //     switch (dateFilter) {
-    //         case '7d':
-    //             query.createdAt = { $gte: new Date(now - 7 * 24 * 60 * 60 * 1000) }
-    //             break
-    //         case '30d':
-    //             query.createdAt = { $gte: new Date(now - 30 * 24 * 60 * 60 * 1000) }
-    //             break
-    //         // No '24h' or 'all' case needed, '24h' is handled above, 'all' means no createdAt query
-    //     }
-    // }  
     query.location = {
         $near: {
             $geometry: {
@@ -169,7 +153,6 @@ const getFilteredPosts = (req, res, next) => {
         .find(query)
         .populate('owner')
         .then(response => {
-            console.log("esto es lo que me devuelve el filtered psots", response)
             res.json(response)
         })
         .catch(err => console.log(err))

@@ -1,4 +1,4 @@
-const FRONTEND_URL = process.env.ORIGIN || 'https://greenlet.netlify.app'
+const FRONTEND_URL = process.env.ORIGIN || 'http://localhost:3000'
 
 const { Server: SocketServer } = require('socket.io')
 
@@ -10,15 +10,15 @@ const socket = (server) => {
     })
 
     io.on('connection', (socket) => {
-        console.log('A user has connected.');
+        console.log('A user has connected with id:', socket.id)
 
-        socket.on('message', ({ data }) => {
-            console.log('Received message:', data);
-            io.emit('newMessage', data);
+        socket.on('message', (data) => {
+            console.log('Received message:', data, typeof data)
+            io.emit('newMessage', data)
         })
 
-        socket.on('disconnect', () => {
-            console.log('A user has disconnected.');
+        socket.on('disconnect', (reason) => {
+            console.log(`User with id ${socket.id} has disconnected: ${reason}`)
         })
     })
 
