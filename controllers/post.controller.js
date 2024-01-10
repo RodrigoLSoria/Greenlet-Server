@@ -52,39 +52,51 @@ const getOnePost = (req, res, next) => {
         .catch(err => next(err))
 }
 
-const savePost = (req, res, next) => {
+const savePost = async (req, res, next) => {
 
     const { title, description, plantType, image, location, category,
         equipmentType, condition, otherNotes } = req.body
-
     const { _id: owner } = req.payload
 
+    try {
+        const detailedLocation = await geocodingService.reverseGeocode(location.coordinates[1], location.coordinates[0])
+        const fullLocation = { ...location, ...detailedLocation }
+        const newPost = await Post.create({
+            title,
+            description,
+            plantType,
+            image,
+            location: fullLocation,
+            owner,
+            category,
+            equipment: {
+                equipmentType,
+                condition,
+                otherNotes
+            }
+        })
 
-    geocodingService
-        .reverseGeocode(location.coordinates[1], location.coordinates[0])
-        .then(detailedLocation => {
-            const fullLocation = { ...location, ...detailedLocation }
-            return Post.create({
-                title,
-                description,
-                plantType,
-                image,
-                location: fullLocation,
-                owner,
-                category,
-                equipment: {
-                    equipmentType,
-                    condition,
-                    otherNotes
-                }
+        res.json(newPost)
+
+        checkWishlistMatches(plantType, newPost._id)
+
+    }
+    catch (err) {
+        next(err)
+    }
+
+    const checkWishlistMatches = async (plantType, postId) => {
+        try {
+            const userswithmatch = await User.find({ wishlist: plantType })
+            userswithmatch.forEach(user => {
+                console.log(`user ${user.username} has a match with post ${postId}`)
             })
-        })
-        .then(post => {
-            res.json(post)
-        })
-        .catch(err => {
+        }
+        catch (err) {
             next(err)
-        })
+        }
+
+    }
 }
 
 const editPost = (req, res, next) => {
@@ -105,8 +117,8 @@ const deletePost = (req, res, next) => {
 }
 
 const getFilteredPosts = (req, res, next) => {
-    const { searchQuery, category, plantType, dateFilter, userLatitude, userLongitude } = req.query
-    const defaultMaxDistance = 1000000
+    const { searchQuery, category, plantType, dateFilter, userLatitude, userLongitude, radius } = req.query
+    const maxDistance = radius ? parseInt(radius) : defaultMaxDistance
 
     let query = { isClosed: false }
 
@@ -133,7 +145,7 @@ const getFilteredPosts = (req, res, next) => {
                 break
             case 'all':
             default:
-                startDate = new Date(0) // fetch all
+                startDate = new Date(0)
         }
 
         query.createdAt = { $gte: startDate }
@@ -145,8 +157,9 @@ const getFilteredPosts = (req, res, next) => {
                 type: 'Point',
                 coordinates: [parseFloat(userLongitude), parseFloat(userLatitude)],
             },
-            $maxDistance: defaultMaxDistance * 1000,
+            $maxDistance: maxDistance,
         },
+
     }
 
     Post

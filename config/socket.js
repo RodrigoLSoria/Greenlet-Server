@@ -1,4 +1,4 @@
-const FRONTEND_URL = process.env.ORIGIN || 'http://localhost:3000'
+const FRONTEND_URL = 'http://localhost:5173'
 
 const { Server: SocketServer } = require('socket.io')
 
