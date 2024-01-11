@@ -10,6 +10,11 @@ const conversationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post',
         required: true
+    },
+    exchangeStatus: {
+        type: String,
+        enum: ['pending', 'closed', 'none'],
+        default: 'none'
     }
 })
 

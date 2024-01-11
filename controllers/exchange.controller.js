@@ -1,36 +1,34 @@
 const PlantExchange = require("../models/PlantExchange.model")
 const { verifyToken } = require('../middleware/verifyToken')
+const Conversation = require("../models/Conversation.model")
 
 
 
-const saveExchange = (req, res, next) => {
+const saveExchange = async (req, res, next) => {
     const { giver, receiver, givenPost } = req.body
 
-    console.log("esto es lo que me llega al controller por req.body", req.body)
+    console.log("este es el givenpost", givenPost)
 
-    PlantExchange
-        .create({ giver, receiver, givenPost })
-        .then(exchange => {
-            res.json(exchange)
-        })
-        .catch(err => {
-            next(err)
-        })
+    try {
+        const exchange = await PlantExchange.create({ giver, receiver, givenPost })
+        await Conversation.findOneAndUpdate({ post: givenPost }, { exchangeStatus: 'pending' })
+        res.json(exchange)
+    } catch (err) {
+        next(err)
+    }
 }
 
-const updateExchange = (req, res, next) => {
+const updateExchange = async (req, res, next) => {
     const { exchange_id } = req.params
     const { status } = req.body
 
-    PlantExchange
-        .findByIdAndUpdate(exchange_id, { status: status }, { new: true })
-        .then(updatedExchange => {
-            res.json(updatedExchange)
-        })
-        .catch(err => {
-            next(err)
-        })
-
+    try {
+        const updatedExchange = await PlantExchange.findByIdAndUpdate(exchange_id, { status }, { new: true })
+        await Conversation.findOneAndUpdate({ post: updatedExchange.givenPost }, { exchangeStatus: status })
+        res.json(updatedExchange)
+    } catch (err) {
+        next(err)
+    }
 }
 
 const getExchangesForUserByStatus = (req, res, next) => {
