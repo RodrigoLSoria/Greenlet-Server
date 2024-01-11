@@ -18,7 +18,6 @@ const conversationSchema = new mongoose.Schema({
     }
 })
 
-conversationSchema.index({ participants: 1, post: 1 }, { unique: true })
 
 const Conversation = mongoose.model('Conversation', conversationSchema)
 

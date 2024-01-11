@@ -18,23 +18,25 @@ const getAllConversationsForUser = (req, res, next) => {
         .catch(err => next(err))
 }
 
-
 const getOrCreateConversation = async (req, res, next) => {
     const { user1_id, user2_id, post_id } = req.params
-    console.log("user1_id, user2_id, post_id", user1_id, user2_id, post_id)
 
     try {
-        let conversation = await Conversation.findOne({
-            participants: { $all: [user1_id, user2_id] },
-            post: post_id
-        })
-
-        if (!conversation) {
-            conversation = await Conversation.create({
-                participants: [user1_id, user2_id],
+        let conversation = await Conversation.findOneAndUpdate(
+            {
+                participants: { $all: [user1_id, user2_id].sort() },
                 post: post_id
-            })
-        }
+            },
+            {
+                $setOnInsert: { participants: [user1_id, user2_id].sort(), post: post_id }
+            },
+            {
+                new: true,
+                upsert: true,
+                setDefaultsOnInsert: true
+            }
+        )
+
 
         const messages = await Message.find({
             conversation: conversation._id
