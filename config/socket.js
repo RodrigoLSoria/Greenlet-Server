@@ -1,4 +1,4 @@
-const FRONTEND_URL = 'http://localhost:5173'
+const FRONTEND_URL = "http://localhost:5173" || "https://greenlet.netlify.app"
 
 const { Server: SocketServer } = require('socket.io')
 
