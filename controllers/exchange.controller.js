@@ -7,8 +7,6 @@ const Conversation = require("../models/Conversation.model")
 const saveExchange = async (req, res, next) => {
     const { giver, receiver, givenPost } = req.body
 
-    console.log("este es el givenpost", givenPost)
-
     try {
         const exchange = await PlantExchange.create({ giver, receiver, givenPost })
         await Conversation.findOneAndUpdate({ post: givenPost }, { exchangeStatus: 'pending' })
@@ -34,7 +32,6 @@ const updateExchange = async (req, res, next) => {
 const getExchangesForUserByStatus = (req, res, next) => {
     const { user_id } = req.params
     const { status } = req.params
-    console.log("esto me llega a controller", req.params)
     PlantExchange
         .find({
             $or: [{ giver: user_id }, { receiver: user_id }],
