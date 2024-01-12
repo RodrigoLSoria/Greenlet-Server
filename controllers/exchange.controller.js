@@ -17,15 +17,27 @@ const saveExchange = async (req, res, next) => {
 }
 
 const updateExchange = async (req, res, next) => {
-    const { exchange_id } = req.params
-    const { status } = req.body
+    const { exchange_id } = req.params;
+    const { status } = req.body;
 
     try {
-        const updatedExchange = await PlantExchange.findByIdAndUpdate(exchange_id, { status }, { new: true })
-        await Conversation.findOneAndUpdate({ post: updatedExchange.givenPost }, { exchangeStatus: status })
-        res.json(updatedExchange)
+        const updatedExchange = await PlantExchange.findByIdAndUpdate(
+            exchange_id,
+            { status },
+            { new: true }
+        );
+
+        if (updatedExchange) {
+            await Conversation.findOneAndUpdate(
+                { post: updatedExchange.givenPost },
+                { exchangeStatus: status },
+                { new: true }
+            );
+        }
+
+        res.json(updatedExchange);
     } catch (err) {
-        next(err)
+        next(err);
     }
 }
 

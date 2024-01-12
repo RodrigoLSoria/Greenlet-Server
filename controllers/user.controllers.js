@@ -32,22 +32,30 @@ const deleteUser = (req, res, next) => {
 const editProfile = (req, res, next) => {
     const { user_id } = req.params
     const userData = req.body
+    User
+        .findByIdAndUpdate(user_id, userData, { new: true })
+        .then(response => res.json(response))
+        .catch(err => next(err))
 
-    if (userData.ratings) {
-        User
-            .findById(user_id)
-            .then(user => {
-                user.ratings.push(userData.ratings)
-                return user.save()
-            })
-            .then(updatedUser => res.json(updatedUser))
-            .catch(err => next(err))
-    } else {
-        User
-            .findByIdAndUpdate(user_id, userData, { new: true })
-            .then(response => res.json(response))
-            .catch(err => next(err))
-    }
+}
+
+const addRating = (req, res, next) => {
+    const { ratedUserId } = req.params
+    const ratingData = req.body
+
+    console.log("esto me llega al controller,", ratedUserId, ratingData)
+
+    User.findByIdAndUpdate(ratedUserId)
+        .then(user => {
+            if (!user) throw new Error('User not found')
+            user.ratings.push(ratingData)
+            return user.save()
+        })
+        .then(updatedUser => res.json(updatedUser))
+        .catch(err => {
+            console.error('Error adding rating:', err)
+            res.status(500).send('Internal server error')
+        })
 }
 
 const getUserFavorites = (req, res, next) => {
@@ -72,5 +80,6 @@ module.exports = {
     getUserDetails,
     deleteUser,
     editProfile,
-    getUserFavorites
+    getUserFavorites,
+    addRating
 }
