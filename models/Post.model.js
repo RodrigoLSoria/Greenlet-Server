@@ -35,7 +35,8 @@ const postSchema = new mongoose.Schema({
     category: {
         type: String,
         // required: [true, 'Category field cannot be empty'],
-        enum: ['exchange', 'gift', 'found']
+        enum: ['exchange', 'gift', 'found'],
+        default: 'exchange'
     },
     image: {
         type: String,

@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser")
 
 const cors = require("cors")
 
-const FRONTEND_URL = "http://localhost:5173" || "https://greenlet.netlify.app"
+const FRONTEND_URL = process.env.ORIGIN || "https://greenlet.netlify.app"
 
 module.exports = (app) => {
   app.set("trust proxy", 1)

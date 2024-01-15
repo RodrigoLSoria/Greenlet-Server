@@ -4,7 +4,7 @@ const server = http.createServer(app)
 const PORT = process.env.PORT || 5005
 
 
-require('./config/socket')(server)
+require('./config/socket.js')(server)
 
 
 server.listen(PORT, () => {
