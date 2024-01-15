@@ -9,8 +9,15 @@ const saveExchange = async (req, res, next) => {
 
     try {
         const exchange = await PlantExchange.create({ giver, receiver, givenPost })
-        await Conversation.findOneAndUpdate({ post: givenPost }, { exchangeStatus: 'pending' })
-        res.json(exchange)
+        const updatedConversation = await Conversation.findOneAndUpdate(
+            { post: givenPost },
+            {
+                exchangeStatus: 'pending',
+                exchangeId: exchange._id
+            },
+            { new: true }
+        )
+        res.json({ exchange, updatedConversation })
     } catch (err) {
         next(err)
     }
@@ -18,19 +25,19 @@ const saveExchange = async (req, res, next) => {
 
 const updateExchange = async (req, res, next) => {
     const { exchange_id } = req.params
-    const { status } = req.body
+    const { exchangeData } = req.body
 
     try {
         const updatedExchange = await PlantExchange.findByIdAndUpdate(
             exchange_id,
-            { status },
+            { exchangeData },
             { new: true }
         )
 
         if (updatedExchange) {
             await Conversation.findOneAndUpdate(
                 { post: updatedExchange.givenPost },
-                { exchangeStatus: status },
+                { exchangeStatus: exchangeData },
                 { new: true }
             )
         }

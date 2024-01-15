@@ -15,6 +15,11 @@ const conversationSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'closed', 'none'],
         default: 'none'
+    },
+    exchangeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PlantExchange',
+        default: null
     }
 })
 
