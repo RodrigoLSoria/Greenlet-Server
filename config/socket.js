@@ -13,7 +13,7 @@ const socket = (server) => {
     io.on('connection', (socket) => {
 
         console.log(`User connected with id: ${socket.id}`);
-
+        console.log(`Connection established from ${socket.handshake.address}`);
 
         socket.on('message', (data) => {
             console.log("dentro del socket.js, despues de enviar un mensaje", data)
