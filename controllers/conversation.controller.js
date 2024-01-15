@@ -31,25 +31,19 @@ const getOrCreateConversation = async (req, res, next) => {
     const { user1_id, user2_id, post_id } = req.params
 
     try {
-        let conversation = await Conversation.findOneAndUpdate(
-            {
-                participants: { $all: [user1_id, user2_id].sort() },
+        let conversation = await Conversation.findOne({
+            participants: { $all: [user1_id, user2_id].sort() },
+            post: post_id
+        })
+
+        if (!conversation) {
+            conversation = await Conversation.create({
+                participants: [user1_id, user2_id].sort(),
                 post: post_id
-            },
-            {
-                $setOnInsert: { participants: [user1_id, user2_id].sort(), post: post_id }
-            },
-            {
-                new: true,
-                upsert: true,
-                setDefaultsOnInsert: true
-            }
-        )
+            })
+        }
 
-
-        const messages = await Message.find({
-            conversation: conversation._id
-        }).sort({ timestamp: 1 })
+        const messages = await Message.find({ conversation: conversation._id }).sort({ timestamp: 1 })
 
         res.json({ conversation, messages })
     } catch (err) {

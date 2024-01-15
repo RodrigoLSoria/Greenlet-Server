@@ -7,14 +7,14 @@ const sendMessage = async (req, res, next) => {
     const { conversation, content } = req.body
     const { _id: sender } = req.payload
 
-    console.log("sendMessage............................................", conversation, content, sender)
+    console.log(" lo que me llega al sendmessage conversation, content y el id del sender", conversation, content, sender)
 
     try {
         const message = await Message.create({
-            conversation: conversation,
+            conversation,
             sender,
             content,
-        })
+        });
 
         await Conversation.findByIdAndUpdate(conversation, { updatedAt: Date.now() })
         res.status(201).json(message)
