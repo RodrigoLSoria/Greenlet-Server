@@ -5,7 +5,7 @@ const Constants = require("../consts/consts")
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
-        // required: [true, 'title field cannot be empty'],
+        required: [true, 'Title field cannot be empty'],
         trim: true,
         maxLength: 80
     },
@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        // required: [true, 'Description field cannot be empty'],
+        required: [true, 'Description field cannot be empty'],
         trim: true,
         maxLength: 500
     },
@@ -34,13 +34,13 @@ const postSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        // required: [true, 'Category field cannot be empty'],
-        enum: ['exchange', 'gift', 'found'],
+        required: [true, 'Category field cannot be empty'],
+        enum: ['exchange', 'gift'],
         default: 'exchange'
     },
     image: {
         type: String,
-        default: null
+        default: "https://res.cloudinary.com/depxadgb3/image/upload/v1704991817/lrz8ej7s3uqdsz9myuj9.png"
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
